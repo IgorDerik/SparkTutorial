@@ -17,7 +17,10 @@ public class Main {
         SparkConf conf = new SparkConf().setMaster("local").setAppName("Word Cup Matches");
         JavaSparkContext context = new JavaSparkContext(conf);
 
-        JavaRDD<String> matchJavaRDD = context.textFile("src/main/resources/WorldCupMatches.csv");
+        JavaRDD<String> stringRDD = context.textFile("src/main/resources/WorldCupMatches.csv");
+        JavaRDD<Match> matchRDD = stringRDD.map(Match::createMatch);
+
+        matchRDD.foreach(System.out::println);
 
         //List<String> matchStrings = matchJavaRDD.collect();
         //matchStrings.forEach( s -> System.out.println( Match.createMatch(s).getMatchID() ) );
