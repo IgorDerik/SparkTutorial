@@ -11,22 +11,18 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
-        //List<Match> matches = MatchBuilder.getMatches();
-        //      matches.forEach(System.out::println);
-
         SparkConf conf = new SparkConf().setMaster("local").setAppName("Word Cup Matches");
         JavaSparkContext context = new JavaSparkContext(conf);
 
         JavaRDD<String> stringRDD = context.textFile("src/main/resources/WorldCupMatches.csv");
         JavaRDD<Match> matchRDD = stringRDD.map(Match::createMatch);
 
-        matchRDD.foreach(System.out::println);
+        //matchRDD.collect().forEach( match -> System.out.println(match.getCity()) );
+        //JavaRDD<Match> fiftiesRDD = matchRDD.filter( match -> match.getYear()>1949 && match.getYear()<1960 );
+        //System.out.println(fiftiesRDD.count());
 
-        //List<String> matchStrings = matchJavaRDD.collect();
-        //matchStrings.forEach( s -> System.out.println( Match.createMatch(s).getMatchID() ) );
-
-        //JavaRDD<Integer> sLenRDD = matchJavaRDD.map(String::length);
-        //sLenRDD.collect().forEach(System.out::println);
+        JavaRDD<Match> yokohamaRDD = matchRDD.filter( m -> m.getCity().equals("Yokohama ") );
+        System.out.println(yokohamaRDD.count());
 
     }
 }
