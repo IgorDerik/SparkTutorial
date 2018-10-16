@@ -32,16 +32,20 @@ public class Main {
         long moreThan4goalsMatchesCount = moreThan4goalsMatchesRDD.count();
         String message = "Percentage of matches with more than 4 goals: ";
         System.out.println( message + ((double) moreThan4goalsMatchesCount/allMatchesCount)*100 + "%");
-        //System.out.println(moreThan4goalsMatchesCount);
-        //System.out.println(allMatchesCount);
-        //moreThan4goalsMatches.collect().forEach(System.out::println);
 
+        JavaPairRDD<String, Integer> pairRDD = matchRDD
+                .mapToPair(match -> new Tuple2<>(match.getCity(), 1))
+                .reduceByKey((a, b) -> a + b);
+
+        for(Tuple2<String, Integer> element : pairRDD.collect()){
+            System.out.println("("+element._1+", "+element._2+")");
+        }
+
+        //Testing spark sql
         SparkSession spark = SparkSession.builder().getOrCreate();
         Dataset<Row> matchDF = spark.createDataFrame(matchRDD,Match.class);
-        //matchDF.show(1000);
         matchDF.createOrReplaceTempView("matches");
         Dataset<Row> sqlDF = spark.sql("SELECT homeTeamGoals FROM matches where homeTeamGoals>5");
-        //Dataset<Row> sqlDF = spark.sql("");
         sqlDF.show(100);
 
     }
