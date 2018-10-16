@@ -17,7 +17,7 @@ import org.apache.spark.sql.SparkSession;
 
 public class Main {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, InterruptedException {
 
         SparkConf conf = new SparkConf().setMaster("local").setAppName("Word Cup Matches");
         JavaSparkContext context = new JavaSparkContext(conf);
@@ -47,6 +47,13 @@ public class Main {
         matchDF.createOrReplaceTempView("matches");
         Dataset<Row> sqlDF = spark.sql("SELECT homeTeamGoals FROM matches where homeTeamGoals>5");
         sqlDF.show(100);
+
+        /*
+//        new Thread().
+        while (true) {
+            Thread.sleep(100000000);
+        }
+        */
 
     }
 }
