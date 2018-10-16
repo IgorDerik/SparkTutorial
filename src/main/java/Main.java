@@ -36,13 +36,13 @@ public class Main {
         //System.out.println(allMatchesCount);
         //moreThan4goalsMatches.collect().forEach(System.out::println);
 
-        //SparkSession spark = SparkSession.builder().getOrCreate();
-        //Dataset<Row> matchDF = spark.createDataFrame(matchRDD,Match.class);
+        SparkSession spark = SparkSession.builder().getOrCreate();
+        Dataset<Row> matchDF = spark.createDataFrame(matchRDD,Match.class);
         //matchDF.show(1000);
-        //matchDF.createOrReplaceTempView("matches");
-        //Dataset<Row> sqlDF = spark.sql("SELECT homeTeamGoals FROM matches where homeTeamGoals>5");
+        matchDF.createOrReplaceTempView("matches");
+        Dataset<Row> sqlDF = spark.sql("SELECT homeTeamGoals FROM matches where homeTeamGoals>5");
         //Dataset<Row> sqlDF = spark.sql("");
-        //sqlDF.show(100);
+        sqlDF.show(100);
 
     }
 }
