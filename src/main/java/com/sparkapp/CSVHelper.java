@@ -1,3 +1,4 @@
+package com.sparkapp;
 /*
  * Copyright 2013 Keith D Swenson
  *

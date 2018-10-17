@@ -1,3 +1,5 @@
+package com.sparkapp;
+
 import java.io.Serializable;
 import java.io.StringReader;
 import java.util.List;
