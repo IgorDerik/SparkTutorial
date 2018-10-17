@@ -12,7 +12,7 @@ import java.util.List;
 public class CSVHelperTest {
 
     @Test
-    public void test_no_quote() throws Exception {
+    public void testNoQuote() throws Exception {
 
         String line = "10,AU,Australia";
         StringReader readRow = new StringReader(line);
@@ -27,7 +27,7 @@ public class CSVHelperTest {
     }
 
     @Test
-    public void test_double_quotes() throws Exception {
+    public void testDoubleQuotes() throws Exception {
 
         String line = "\"10\",\"AU\",\"Australia\"";
         StringReader readRow = new StringReader(line);
@@ -42,7 +42,7 @@ public class CSVHelperTest {
     }
 
     @Test
-    public void test_double_quotes_but_double_quotes_in_column() throws Exception {
+    public void testDoubleQuotesButDoubleQuotesInColumn() throws Exception {
 
         String line = "\"10\",\"AU\",\"Aus\"\"tralia\"";
         StringReader readRow = new StringReader(line);
@@ -57,7 +57,7 @@ public class CSVHelperTest {
     }
 
     @Test
-    public void test_double_quotes_but_comma_in_column() throws Exception {
+    public void testDoubleQuotesButCommaInColumn() throws Exception {
 
         String line = "\"10\",\"AU\",\"Aus,tralia\"";
         StringReader readRow = new StringReader(line);
@@ -72,7 +72,7 @@ public class CSVHelperTest {
     }
 
     @Test
-    public void test_no_quote_but_double_quotes_in_column() throws Exception {
+    public void testNoQuoteButDoubleQuotesInColumn() throws Exception {
 
         String line = "10,AU,Aus\"\"tralia";
         StringReader readRow = new StringReader(line);
