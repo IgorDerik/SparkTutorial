@@ -11,6 +11,14 @@ import java.util.List;
 
 public class CSVHelperTest {
 
+    @Test(expected = NullPointerException.class)
+    public void testNullResult() throws Exception {
+
+        String line = null;
+        StringReader readRow = new StringReader(line);
+        List<String> result = CSVHelper.parseLine(readRow);
+    }
+
     @Test
     public void testNoQuote() throws Exception {
 
