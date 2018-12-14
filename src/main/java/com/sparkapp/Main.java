@@ -28,6 +28,7 @@ public class Main {
         JavaRDD<String> stringRDD = context.textFile("src/main/resources/WorldCupMatches.csv");
         JavaRDD<Match> matchRDD = stringRDD.map(Match::createMatch);
 
+        /*
         //Counting percentage of matches with more than 4 goals...
         long allMatchesCount = matchRDD.count();
         //matchRDD.collect().forEach( match -> System.out.println(match.getCity()) );
@@ -37,7 +38,8 @@ public class Main {
         long moreThan4goalsMatchesCount = moreThan4goalsMatchesRDD.count();
         String message = "Percentage of matches with more than 4 goals: ";
         System.out.println(message + ((double) moreThan4goalsMatchesCount / allMatchesCount) * 100 + "%");
-
+        */
+/*
         //Calculate sum of matches by city
         System.out.println("Calculating sum of matches by city...");
         JavaPairRDD<String, Integer> sumOfMatchesByCitiesRDD = matchRDD
@@ -47,7 +49,7 @@ public class Main {
         for (Tuple2<String, Integer> element : sumOfMatchesByCitiesRDD.collect()) {
             System.out.println("(" + element._1 + ", " + element._2 + ")");
         }
-
+*/
         //Calculate average goals by city
         System.out.println("Calculating average goals by city...");
         JavaPairRDD<String, Integer> cityGoalsRDD = matchRDD
