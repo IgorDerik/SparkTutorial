@@ -22,12 +22,12 @@ public class Main {
 
     public static void main(String[] args) throws IOException, InterruptedException {
 
-        SparkConf conf = new SparkConf().setMaster("yarn").setAppName("Word Cup Matches");
+        SparkConf conf = new SparkConf().setMaster("local").setAppName("Word Cup Matches");
 //        SparkConf conf = new SparkConf().setMaster("local").setAppName("Word Cup Matches");
         JavaSparkContext context = new JavaSparkContext(conf);
 
-//        JavaRDD<String> stringRDD = context.textFile("src/main/resources/WorldCupMatches.csv");
-        JavaRDD<String> stringRDD = context.textFile("gs://jarstorage1/WorldCupMatches.csv");
+        JavaRDD<String> stringRDD = context.textFile(args[0]);
+//        JavaRDD<String> stringRDD = context.textFile("gs://jarstorage1/WorldCupMatches.csv");
         JavaRDD<Match> matchRDD = stringRDD.map(Match::createMatch);
 
         //Counting percentage of matches with more than 4 goals...
@@ -67,6 +67,7 @@ public class Main {
         averageGoals.foreach(data -> System.out.println("City: "+data._1 + "| Average Goals: " + data._2));
 
         //writing results to disc
+
         SparkSession spark = SparkSession.builder().getOrCreate();
 
         JavaRDD<Row> averageGoalsRDD = averageGoals.map(tuple -> RowFactory.create(tuple._1(),tuple._2()));
@@ -77,7 +78,7 @@ public class Main {
 
         Dataset<Row> averGoalsDF = spark.createDataFrame(averageGoalsRDD, structType);
 
-        averGoalsDF.write().json("gs://jarstorage1/averageGoals");
+        averGoalsDF.write().json(args[1]);
 
 //        averGoalsDF.show(1000);
 
